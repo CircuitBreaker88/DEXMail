@@ -1,0 +1,26 @@
+# /etc/conf.d/dexmaild: config file for /etc/init.d/dexmaild
+
+# Config file location
+#BITCOIND_CONFIGFILE="/etc/dexmail/dexmail.conf"
+
+# What directory to write pidfile to?  (created and owned by $BITCOIND_USER)
+#BITCOIND_PIDDIR="/var/run/dexmaild"
+
+# What filename to give the pidfile
+#BITCOIND_PIDFILE="${BITCOIND_PIDDIR}/dexmaild.pid"
+
+# Where to write dexmaild data (be mindful that the blockchain is large)
+#BITCOIND_DATADIR="/var/lib/dexmaild"
+
+# User and group to own dexmaild process
+#BITCOIND_USER="dexmail"
+#BITCOIND_GROUP="dexmail"
+
+# Path to dexmaild executable
+#BITCOIND_BIN="/usr/bin/dexmaild"
+
+# Nice value to run dexmaild under
+#BITCOIND_NICE=0
+
+# Additional options (avoid -conf and -datadir, use flags above)
+BITCOIND_OPTS=""

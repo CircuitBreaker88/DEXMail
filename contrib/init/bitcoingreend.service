@@ -1,0 +1,26 @@
+[Unit]
+Description=DEXMail's distributed currency daemon
+After=network.target
+
+[Service]
+User=dexmail
+Group=dexmail
+
+Type=forking
+PIDFile=/var/lib/dexmaild/dexmaild.pid
+
+ExecStart=/usr/bin/dexmaild -daemon -pid=/var/lib/dexmaild/dexmaild.pid \
+          -conf=/etc/dexmail/dexmail.conf -datadir=/var/lib/dexmaild
+
+ExecStop=-/usr/bin/dexmail-cli -conf=/etc/dexmail/dexmail.conf \
+         -datadir=/var/lib/dexmaild stop
+
+Restart=always
+PrivateTmp=true
+TimeoutStopSec=60s
+TimeoutStartSec=2s
+StartLimitInterval=120s
+StartLimitBurst=5
+
+[Install]
+WantedBy=multi-user.target
