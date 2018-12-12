@@ -54,11 +54,11 @@ static void convertSeed6(std::vector<CAddress>& vSeedsOut, const SeedSpec6* data
 // + Contains no strange transactions
 static Checkpoints::MapCheckpoints mapCheckpoints =
     boost::assign::map_list_of
-    (0, uint256("0x"));
+    (0, uint256("0x000008467c3a9c587533dea06ad9380cded3ed32f9742a6c0c1aebc21bf2bc9b"));
 
 static const Checkpoints::CCheckpointData data = {
     &mapCheckpoints,
-    1516929980, // * UNIX timestamp of last checkpoint block
+    1516926684, // * UNIX timestamp of last checkpoint block
     0,          // * total number of transactions between genesis and last checkpoint
                 //   (the tx=... number in the SetBestChain debug.log lines)
     2000        // * estimated number of transactions per day after checkpoint
@@ -93,14 +93,14 @@ public:
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
          * a large 4-byte int at any alignment.
          */
-        pchMessageStart[0] = 0x52;
-        pchMessageStart[1] = 0x2c;
-        pchMessageStart[2] = 0xd2;
-        pchMessageStart[3] = 0xa6;
+        pchMessageStart[0] = 0x54;
+        pchMessageStart[1] = 0xdc;
+        pchMessageStart[2] = 0x12;
+        pchMessageStart[3] = 0xae;
         vAlertPubKey = ParseHex("045ad6f1551c2367f81c0ecb4d45d088298442887645a314dfcba3039401872473b0200e69d9679a0d7cc307fb9aaaacafb0cebc18050ce7c995fa19c6accc8415");
-        nDefaultPort = 9333;
+        nDefaultPort = 37550;
         bnProofOfWorkLimit = ~uint256(0) >> 1;
-        nSubsidyHalvingInterval = 100000000;
+        nSubsidyHalvingInterval = 1050000;
         nMaxReorganizationDepth = 100;
         nEnforceBlockUpgradeMajority = 750;
         nRejectBlockOutdatedMajority = 950;
@@ -110,7 +110,7 @@ public:
         nTargetSpacing = 2 * 60;  // DEXMail: 2 minutes
         nMaturity = 10;
         nMasternodeCountDrift = 20;
-        nMaxMoneyOut = 1000000000 * COIN;
+        nMaxMoneyOut = 21000000 * COIN;
 
         /** Height or Time Based Activations **/
         nLastPOWBlock = 200;
@@ -133,7 +133,7 @@ public:
          * nonce: 21256609
          * genesis_hash: 000008467c3a9c587533dea06ad9380cded3ed32f9742a6c0c1aebc21bf2bc9b
          */
-        const char* pszTimestamp = "DEXMail will be the future or the electronic mailing service";
+        const char* pszTimestamp = "Even With Energy Surplus, Canada Unable to Meet Electricity Demands of Bitcoin Miners";
         CMutableTransaction txNew;
         txNew.vin.resize(1);
         txNew.vout.resize(1);
@@ -144,44 +144,16 @@ public:
         genesis.hashPrevBlock = 0;
         genesis.hashMerkleRoot = genesis.BuildMerkleTree();
         genesis.nVersion = 1;
-        genesis.nTime = 1516929980;
+        genesis.nTime = 1516926684;
         genesis.nBits = 0x1e0ffff0;
-        genesis.nNonce = 0;
+        genesis.nNonce = 21256609;
 
         hashGenesisBlock = genesis.GetHash();
-
-
-        if(genesis.GetHash() != uint256("0x"))
-        {
-        printf("MSearching for genesis block...\n");
-        uint256 hashTarget;
-        hashTarget.SetCompact(genesis.nBits);
-        while(uint256(genesis.GetHash()) > uint256(hashTarget))
-        {
-            ++genesis.nNonce;
-            if (genesis.nNonce == 0)
-            {
-                printf("Mainnet NONCE WRAPPED, incrementing time");
-                std::cout << std::string("Mainnet NONCE WRAPPED, incrementing time:\n");
-                ++genesis.nTime;
-              }
-              if (genesis.nNonce % 10000 == 0)
-              {
-                printf("Mainnet: nonce %08u: hash = %s \n", genesis.nNonce, genesis.GetHash().ToString().c_str());
-              }
-            }
-            printf("Mainnet block.nTime = %u \n", genesis.nTime);
-            printf("Mainnet block.nNonce = %u \n", genesis.nNonce);
-            printf("Mainnet block.hashMerkleRoot: %s\n", genesis.hashMerkleRoot.ToString().c_str());
-            printf("Mainnet block.GetHash = %s\n", genesis.GetHash().ToString().c_str());
-          }
-
-
-        assert(hashGenesisBlock == uint256("0x"));
-        assert(genesis.hashMerkleRoot == uint256("0x"));
+        assert(hashGenesisBlock == uint256("0x000008467c3a9c587533dea06ad9380cded3ed32f9742a6c0c1aebc21bf2bc9b"));
+        assert(genesis.hashMerkleRoot == uint256("0x07cbcacfc822fba6bbeb05312258fa43b96a68fc310af8dfcec604591763f7cf"));
 
         // DEXMail addresses start with 'G'
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 30);
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 38);
         // DEXMail script addresses start with '3'
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 6);
         // DEXMail private keys start with 'K'
@@ -196,11 +168,11 @@ public:
 
         convertSeed6(vFixedSeeds, pnSeed6_main, ARRAYLEN(pnSeed6_main));
 
-        fMiningRequiresPeers = false;
+        fMiningRequiresPeers = true;
         fAllowMinDifficultyBlocks = false;
         fDefaultConsistencyChecks = false;
         fRequireStandard = true;
-        fMineBlocksOnDemand = true;
+        fMineBlocksOnDemand = false;
         fSkipProofOfWorkCheck = false;
         fTestnetToBeDeprecatedFieldRPC = false;
         fHeadersFirstSyncingActive = false;
@@ -235,7 +207,7 @@ public:
         pchMessageStart[2] = 0x32;
         pchMessageStart[3] = 0xbc;
         vAlertPubKey = ParseHex("041b2b4c86273359acac3522471911ed2b303eaab65e8a1de01c06e89f2eab1e55234a4b504f3ce20c6f661f007d0ca15623b4358d9855c7c8ba793a24fa315e22");
-        nDefaultPort = 19333;
+        nDefaultPort = 37552;
         nEnforceBlockUpgradeMajority = 51;
         nRejectBlockOutdatedMajority = 75;
         nToCheckBlockUpgradeMajority = 100;
@@ -246,7 +218,7 @@ public:
         nMaturity = 15;
         nMasternodeCountDrift = 4;
         nModifierUpdateBlock = 1;
-        nMaxMoneyOut = 1000000000 * COIN;
+        nMaxMoneyOut = 21000000 * COIN;
 
         //! Modify the testnet genesis block so the timestamp is valid for a later start.
         genesis.nTime = 1516926684;
@@ -322,7 +294,7 @@ public:
         genesis.nNonce = 20542300;
 
         hashGenesisBlock = genesis.GetHash();
-        nDefaultPort = 29333;
+        nDefaultPort = 237550;
         assert(hashGenesisBlock == uint256("0x229874aa8a92df3347600978e226ba57bc994b9fa291ea50519afafca2d50ed3"));
 
         vFixedSeeds.clear(); //! Regtest mode doesn't have any fixed seeds.
