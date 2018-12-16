@@ -7,8 +7,8 @@
 /* light-green2:      #219C21 (sligtly darker for gradients)                            */
 /*                                                                                      */
 /* medium-green1:     #219C21 (on hover)                                                */
-/* medium-green1:     #1c3448 (main green for dark backgrounds)                         */
-/* medium-green2:     #004000 (sligtly darker for gradients)                            */
+/* medium-green1:     #006200 (main green for dark backgrounds) #006200-original                       */
+/* medium-green2:     #1c3448 (sligtly darker for gradients)    #1c3448-original                        */
 /*                                                                                      */
 /* background:         #f8f6f6                                                          */
 /* input fields:       #e7e7e7                                                          */
@@ -209,7 +209,7 @@ QLabel { /* Base Text Size & Color */
 /***************************** Global Qt Objects ***********************************************************/
 
 QPushButton { /* Global Button Style */
-	background-color: #1c3448;
+	background-color: #006200;
 	border-width: 1px;
 	border-style: outset;
 	border-color: #0f7f12;
@@ -230,7 +230,7 @@ QPushButton:hover {
 }
 
 QPushButton:pressed {
-	background-color: #004000;
+	background-color: #1c3448;
 	border:1px solid #000000;
 }
 
@@ -1065,7 +1065,7 @@ QStackedWidget#SendCoinsEntry .QToolButton { /* General Settings for Pay To Icon
 	background-color: #0f7f12;
 	border-width: 1px;
 	border-style: outset;
-	border-color: #1c3448;
+	border-color: #006200;
 	border-radius: 2px;
 	color:#ffffff;
 	font-size:12px;
