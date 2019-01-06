@@ -118,16 +118,16 @@ QLabel#progressBarLabel {
 }
 
 QTabWidget {
-	background-color:#f2f2f2;
+	background-color:#123745;
 }
 
 QTabWidget::pane {
-	background-color:#f2f2f2;
+	background-color:#123745;
 	border:1px solid #c2c2c2;
 }
 
 QTabBar {
-	background-color:#f2f2f2;
+	background-color:#123745;
 	color:#349CC0;
 }
 
@@ -177,7 +177,7 @@ QLabel { /* Base Text Size & Color */
 	padding: 3px;
 	border: 0px;
 	color: #349CC0;
-	background-color: #f2f2f2;
+	background-color: #123745;
 }
 
 .QValidatedLineEdit:!focus {
@@ -199,11 +199,11 @@ QLabel { /* Base Text Size & Color */
 
 .QValidatedLineEdit:disabled, .QLineEdit:disabled, .QTextEdit:disabled {
 	color: #349CC0;
-	background-color:#f2f2f2;
+	background-color:#123745;
 }
 
 .QPlainTextEdit {
-	background-color:#f2f2f2;
+	background-color:#123745;
 }
 
 /***************************** Global Qt Objects ***********************************************************/
@@ -248,11 +248,11 @@ QPushButton#labelEncryptionIcon, QPushButton#labelConnectionsIcon {
 /* QSpinBox::down-arrow:hover */
 
 QSpinBox::up-button:hover {
-	background-color: #f2f2f2;
+	background-color: #123745;
 }
 
 QSpinBox::down-button:hover {
-	background-color: #f2f2f2;
+	background-color: #123745;
 }
 
 QComboBox { /* Dropdown Menus */
@@ -264,7 +264,7 @@ QComboBox { /* Dropdown Menus */
 }
 
 QComboBox:checked {
-	background:#f2f2f2;
+	background:#123745;
 }
 
 QComboBox:editable {
@@ -304,7 +304,7 @@ QComboBox::item:alternate {
 
 QComboBox::item:selected {
 	border:0px solid transparent;
-	background:#f2f2f2;
+	background:#123745;
 }
 
 QComboBox::indicator {
@@ -363,7 +363,7 @@ QValueComboBox {
 	padding: 3px;
 	border: 0px;
 	color: #349CC0;
-	background-color: #f2f2f2;
+	background-color: #123745;
 }
 
 QValueComboBox:!focus {
@@ -438,7 +438,7 @@ QTableWidget:focus, QTableView, QTableView:focus { /* Remove focus outline */
 
 QTreeWidget { /* Tree Background */
 	background-color:#123745;
-	alternate-background-color:#f2f2f2;
+	alternate-background-color:#123745;
 	color:#349CC0;
 }
 
