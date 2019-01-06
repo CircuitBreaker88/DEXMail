@@ -11,7 +11,7 @@
 /* medium-green2:     #0f2e39 (sligtly darker for gradients)    #0f2e39-original                        */
 /*                                                                                      */
 /* background:         #f8f6f6                                                          */
-/* input fields:       #e7e7e7                                                          */
+/* input fields:       #123745                                                          */
 /****************************************************************************************/
 /*                                                                                      */
 /* Note: it's sometimes not easy to figure out all those screen elements, so unused     */
@@ -142,7 +142,7 @@ QWidget {
 }
 
 QGroupBox {
-	background-color:#fcfcfc;
+	background-color:#123745;
 	color:#349CC0;
 }
 
@@ -182,17 +182,17 @@ QLabel { /* Base Text Size & Color */
 
 .QValidatedLineEdit:!focus {
 	color: #349CC0;
-	background-color: #e7e7e7;
+	background-color: #123745;
 }
 
 .QLineEdit:!focus {
 	color: #349CC0;
-	background-color: #e7e7e7;
+	background-color: #123745;
 }
 
 .QTextEdit:!focus {
 	color: #349CC0;
-	background-color: #e7e7e7;
+	background-color: #123745;
 }
 
 /* .QValidatedLineEdit:checked, .QLineEdit:checked */
@@ -258,7 +258,7 @@ QSpinBox::down-button:hover {
 QComboBox { /* Dropdown Menus */
 	border:1px solid #349CC0;
 	padding: 3px 5px 3px 5px;
-	background:#fcfcfc;
+	background:#123745;
 	min-height:25px;
 	color:#818181;
 }
@@ -316,7 +316,7 @@ QComboBox::indicator {
 
 QAbstractSpinBox {
 	padding: 3px 5px 3px 5px;
-	background: #fcfcfc;
+	background: #123745;
 	font-size: 12px;
 	min-height: 25px;
 	outline: 0;
@@ -356,7 +356,7 @@ QAbstractSpinBox::down-arrow {
 
 QValueComboBox {
 	padding: 3px 5px 3px 5px;
-	background: #fcfcfc;
+	background: #123745;
 	font-size: 12px;
 	min-height: 25px;
 	outline: 0;
@@ -368,7 +368,7 @@ QValueComboBox {
 
 QValueComboBox:!focus {
 	color:#5c4c7c;
-	background-color:#e7e7e7;
+	background-color:#123745;
 }
 
 /****************************************************************************************/
@@ -416,7 +416,7 @@ QHeaderView::section:last {
 }
 
 QTableView::item { /* Table Item */
-	background-color:#fcfcfc;
+	background-color:#123745;
 	font-size:12px;
 }
 
@@ -426,7 +426,7 @@ QTableView::item:selected { /* Table Item Selected */
 }
 
 QTableWidget { /* Table Background */
-	background-color: #fcfcfc;
+	background-color: #123745;
 	alternate-background-color: yellow;
 	border:1px solid #349CC0;
 }
@@ -437,7 +437,7 @@ QTableWidget:focus, QTableView, QTableView:focus { /* Remove focus outline */
 }
 
 QTreeWidget { /* Tree Background */
-	background-color:#fcfcfc;
+	background-color:#123745;
 	alternate-background-color:#f2f2f2;
 	color:#349CC0;
 }
@@ -590,7 +590,7 @@ QDialog .QTabWidget {
 }
 
 QDialog .QTabWidget::pane {
-	border: 1px solid #d7d7d7;
+	border: 1px solid #123745;
 }
 
 QDialog .QTabWidget QTabBar::tab {
@@ -600,15 +600,15 @@ QDialog .QTabWidget QTabBar::tab {
 	padding-right:10px;
 	padding-top:5px;
 	padding-bottom:5px;
-	border-top: 1px solid #d7d7d7;
+	border-top: 1px solid #123745;
 }
 
 QDialog .QTabWidget QTabBar::tab:first {
-	border-left: 1px solid #d7d7d7;
+	border-left: 1px solid #123745;
 }
 
 QDialog .QTabWidget QTabBar::tab:last {
-	border-right: 1px solid #d7d7d7;
+	border-right: 1px solid #123745;
 }
 
 QDialog .QTabWidget QTabBar::tab:selected, QDialog .QTabWidget QTabBar::tab:hover {
@@ -767,7 +767,7 @@ QDialog#RPCConsole QPushButton#openDebugLogfileButton {
 
 QDialog#RPCConsole QTextEdit#messagesWidget { /* Console Messages Window */
 	border:0;
-	background-color:#fcfcfc;
+	background-color:#123745;
 	color:#349CC0;
 }
 
@@ -1200,7 +1200,7 @@ QDialog#CoinControlDialog .CoinControlTreeWidget#treeWidget::item:selected { /* 
 }
 
 QDialog#CoinControlDialog .CoinControlTreeWidget#treeWidget::item:checked { /* Coin Control Item (checked) */
-	background-color:#f7f7f7;
+	background-color:#123745;
 	color:#010F1A;
 }
 
@@ -1208,7 +1208,7 @@ QDialog#CoinControlDialog .CoinControlTreeWidget#treeWidget::branch:selected { /
 	background-image: url(':/images/qtreeview_selected');
 	background-repeat:no-repeat;
 	background-position:center;
-	background-color:#f7f7f7;
+	background-color:#123745;
 	color:#349CC0;
 }
 
@@ -1216,7 +1216,7 @@ QDialog#CoinControlDialog .CoinControlTreeWidget#treeWidget::branch:checked { /*
 	background-image: url(':/images/qtreeview_selected');
 	background-repeat:no-repeat;
 	background-position:center;
-	background-color:#f7f7f7;
+	background-color:#123745;
 	color:#349CC0;
 }
 
@@ -1278,7 +1278,7 @@ QWidget#ReceiveCoinsDialog .QFrame#frame .QLabel#label_6 { /* Requested Payments
 /**************************** RECEIVE COINS DIALOG **************************************/
 
 QDialog#ReceiveRequestDialog QTextEdit { /* Contents of Receive Coin Dialog */
-	border:1px solid #d7d7d7;
+	border:1px solid #123745;
 }
 
 /**************************** TRANSACTIONS PAGE *****************************************/
@@ -1307,7 +1307,7 @@ QLabel#transactionSum { /* Example of setObjectName for widgets without name */
 /**************************** TRANSACTION DETAILS DIALOG ********************************/
 
 QDialog#TransactionDescDialog QTextEdit { /* Contents of Receive Coin Dialog */
-	border:1px solid #d7d7d7;
+	border:1px solid #123745;
 }
 
 /**************************** MASTERNODE LIST *******************************************/
