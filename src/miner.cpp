@@ -360,9 +360,12 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn, CWallet* pwallet, 
         LogPrintf("CreateNewBlock(): total size %u\n", nBlockSize);
 
         // Compute final coinbase transaction.
-        pblock->vtx[0].vin[0].scriptSig = CScript() << nHeight << OP_0;
-        if (!fProofOfStake) {
+        if (fProofOfStake) {
+    pblock->vtx[0].vin[0].scriptSig = CScript() << nHeight << OP_0;
+} else if (!fProofOfStake) {
+    txNew.vin[0].scriptSig = CScript() << nHeight << OP_0;
             pblock->vtx[0] = txNew;
+            pblock->vtx[0].vout[0].nValue = GetBlockValue(pindexPrev->nHeight);
             pblocktemplate->vTxFees[0] = -nFees;
         }
 
@@ -374,12 +377,12 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn, CWallet* pwallet, 
         pblock->nNonce = 0;
         pblocktemplate->vTxSigOps[0] = GetLegacySigOpCount(pblock->vtx[0]);
 
-        // CValidationState state;
-        // if (!TestBlockValidity(state, *pblock, pindexPrev, false, false)) {
-        //     LogPrintf("CreateNewBlock() : TestBlockValidity failed\n");
-        //     mempool.clear();
-        //     return NULL;
-        // }
+         CValidationState state;
+         if (!TestBlockValidity(state, *pblock, pindexPrev, false, false)) {
+             LogPrintf("CreateNewBlock() : TestBlockValidity failed\n");
+             mempool.clear();
+             return NULL;
+         }
     }
 
     return pblocktemplate.release();
