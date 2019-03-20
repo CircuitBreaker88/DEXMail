@@ -32,6 +32,7 @@
 #include "undo.h"
 #include "validationinterface.h"
 #include "masternode-sync.h"
+#include "DevPayment.h"
 
 #include <algorithm>
 #include <exception>

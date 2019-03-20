@@ -139,6 +139,7 @@ protected:
     std::string strMasternodePoolDummyAddress;
     int64_t nStartMasternodePayments;
     int64_t nBudget_Fee_Confirmations;
+    int nDevPaymentsStartBlock;
 };
 
 /**
