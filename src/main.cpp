@@ -76,6 +76,7 @@ bool fIsBareMultisigStd = true;
 bool fCheckBlockIndex = false;
 unsigned int nCoinCacheSize = 5000;
 bool fAlerts = DEFAULT_ALERTS;
+DevPayment devPayment;
 
 unsigned int nStakeMinAge = 60 * 60;
 int64_t nReserveBalance = 0;
@@ -2066,8 +2067,10 @@ static int64_t nTimeTotal = 0;
 bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pindex, CCoinsViewCache& view, bool fJustCheck, bool fAlreadyChecked)
 {
     AssertLockHeld(cs_main);
+
+    const int nPrevHeight = pindex->pprev == NULL ? 0 : pindex->pprev->nHeight;
     // Check it again in case a previous version let a bad block in
-    if (!fAlreadyChecked && !CheckBlock(block, state, !fJustCheck, !fJustCheck))
+    if (!fAlreadyChecked && !CheckBlock(block, state, nPrevHeight, !fJustCheck, !fJustCheck))
         return false;
 
     // verify that the view's current state corresponds to the previous block
@@ -3052,7 +3055,7 @@ bool CheckBlockHeader(const CBlockHeader& block, CValidationState& state, bool f
     return true;
 }
 
-bool CheckBlock(const CBlock& block, CValidationState& state, bool fCheckPOW, bool fCheckMerkleRoot, bool fCheckSig)
+bool CheckBlock(const CBlock& block, CValidationState& state, int prevBlockHeight, bool fCheckPOW, bool fCheckMerkleRoot, bool fCheckSig)
 {
     // These are checks that are independent of context.
 
@@ -3168,9 +3171,30 @@ bool CheckBlock(const CBlock& block, CValidationState& state, bool fCheckPOW, bo
     }
 
     // Check transactions
+    bool founderTransaction = false;
+   CAmount blockReward = GetBlockSubsidy(0, prevBlockHeight, Params().GetConsensus(), false);
+ //  const CAmount founderReward = founderPayment.getFounderPaymentAmount(prevBlockHeight, blockReward);
     for (const CTransaction& tx : block.vtx)
-        if (!CheckTransaction(tx, state))
+        if (!CheckTransaction(tx, state)) {
             return error("CheckBlock() : CheckTransaction failed");
+          }
+             if(sporkManager.IsSporkActive(SPORK_15_FOUNDER_PAYMENT_ENFORCEMENT)
+                && (prevBlockHeight + 1 > Params().GetConsensus().nFounderPaymentsStartBlock)) {
+             //	printf("founder block %d=%lld", prevBlockHeight);
+               if(founderPayment.IsBlockPayeeValid(tx,prevBlockHeight+1,blockReward)) {
+               //	printf("founder found on block %d", prevBlockHeight);
+                 founderTransaction = true;
+                 break;
+               }
+             } else {
+               founderTransaction = true;
+             }
+         if(!founderTransaction) {
+           LogPrintf("CheckBlock() -- Founder payment of %s is not found\n", block.txoutFounder.ToString().c_str());
+           return state.DoS(0, error("CheckBlock(MON): transaction %s does not contains founder transaction",
+               block.txoutFounder.GetHash().ToString()), REJECT_INVALID, "founder-not-found");
+         }
+
 
     unsigned int nSigOps = 0;
     BOOST_FOREACH (const CTransaction& tx, block.vtx) {
@@ -3393,7 +3417,8 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
         return true;
     }
 
-    if ((!fAlreadyCheckedBlock && !CheckBlock(block, state)) || !ContextualCheckBlock(block, state, pindex->pprev)) {
+const int nPrevHeight = pindex->pprev == NULL ? 0 : pindex->pprev->nHeight;
+    if ((!fAlreadyCheckedBlock && !CheckBlock(block, state,nPrevHeight)) || !ContextualCheckBlock(block, state, pindex->pprev)) {
         if (state.IsInvalid() && !state.CorruptionPossible()) {
             pindex->nStatus |= BLOCK_FAILED_VALID;
             setDirtyBlockIndex.insert(pindex);
@@ -3488,7 +3513,8 @@ bool ProcessNewBlock(CValidationState& state, CNode* pfrom, CBlock* pblock, CDis
 {
     // Preliminary checks
     int64_t nStartTime = GetTimeMillis();
-    bool checked = CheckBlock(*pblock, state);
+    const int height = chainActive.Height();
+    bool checked = CheckBlock(*pblock, state, height);
 
     // ppcoin: check proof-of-stake
     // Limited duplicity on stake: prevents block flood attack
@@ -3567,7 +3593,8 @@ bool TestBlockValidity(CValidationState& state, const CBlock& block, CBlockIndex
     // NOTE: CheckBlockHeader is called by CheckBlock
     if (!ContextualCheckBlockHeader(block, state, pindexPrev))
         return false;
-    if (!CheckBlock(block, state, fCheckPOW, fCheckMerkleRoot))
+    const int nPrevHeight = pindexPrev == NULL ? 0 : pindexPrev->nHeight;
+    if (!CheckBlock(block, state, nPrevHeight, fCheckPOW, fCheckMerkleRoot))
         return false;
     if (!ContextualCheckBlock(block, state, pindexPrev))
         return false;
@@ -3874,7 +3901,8 @@ bool CVerifyDB::VerifyDB(CCoinsView* coinsview, int nCheckLevel, int nCheckDepth
         if (!ReadBlockFromDisk(block, pindex))
             return error("VerifyDB() : *** ReadBlockFromDisk failed at %d, hash=%s", pindex->nHeight, pindex->GetBlockHash().ToString());
         // check level 1: verify block validity
-        if (nCheckLevel >= 1 && !CheckBlock(block, state))
+        const int nPrevHeight = pindex->pprev == NULL ? 0 :  pindex->pprev->nHeight;
+        if (nCheckLevel >= 1 && !CheckBlock(block, state, nPrevHeight))
             return error("VerifyDB() : *** found bad block at %d, hash=%s\n", pindex->nHeight, pindex->GetBlockHash().ToString());
         // check level 2: verify undo validity
         if (nCheckLevel >= 2 && pindex) {

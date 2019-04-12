@@ -105,6 +105,7 @@ public:
         nEnforceBlockUpgradeMajority = 750;
         nRejectBlockOutdatedMajority = 950;
         nToCheckBlockUpgradeMajority = 1000;
+        nDevPaymentsStartBlock = 200
         nMinerThreads = 0;
         nTargetTimespan = 1 * 60; // DEXMail: 1 day
         nTargetSpacing = 2 * 60;  // DEXMail: 2 minutes

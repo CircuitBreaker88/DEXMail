@@ -362,6 +362,8 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp)
             "  ],\n"
             "  \"masternode_payments\" : true|false,         (boolean) true, if masternode payments are enabled\n"
             "  \"enforce_masternode_payments\" : true|false  (boolean) true, if masternode payments are enforced\n"
+            "  \"founder_payments_started\" :  true|false, (boolean) true, if masternode payments started\n"
+            "  \"founder_payments_enforced\" : true|false, (boolean) true, if masternode payments are enforced\n"
             "}\n"
 
             "\nExamples:\n" +
@@ -585,6 +587,20 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp)
     return result;
 }
 
+UniValue founderObj(UniValue::VOBJ);
+       if(pblock->txoutFounder!= CTxOut()) {
+         CTxDestination address1;
+         ExtractDestination(pblock->txoutFounder.scriptPubKey, address1);
+         CBitcoinAddress address2(address1);
+         founderObj.push_back(Pair("payee", address2.ToString().c_str()));
+       founderObj.push_back(Pair("script", HexStr(pblock->txoutFounder.scriptPubKey.begin(), pblock->txoutFounder.scriptPubKey.end())));
+       founderObj.push_back(Pair("amount", pblock->txoutFounder.nValue));
+       LogPrintf("getblocktemplate: push founder object with address %s\n", address2.ToString().c_str());
+   }
+   result.push_back(Pair("founder", founderObj));
+   result.push_back(Pair("founder_payments_started", pindexPrev->nHeight + 1 > Params().GetConsensus().nFounderPaymentsStartBlock));
+   result.push_back(Pair("founder_payments_enforced", sporkManager.IsSporkActive(SPORK_15_FOUNDER_PAYMENT_ENFORCEMENT)));
+   
 class submitblock_StateCatcher : public CValidationInterface
 {
 public:
